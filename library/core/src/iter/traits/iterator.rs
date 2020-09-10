@@ -645,6 +645,20 @@ pub trait Iterator {
         self.fold((), call(f));
     }
 
+    /// Consumes the whole iterator.
+    /// ```
+    /// let v = vec![1, 2, 3, 4, 5];
+    /// v.into_iter().consume();
+    /// ```
+    #[inline]
+    #[unstable(feature = "iterator_consume", reason = "new API", issue = "53485")]
+    fn consume(self)
+    where
+        Self: Sized,
+    {
+        self.fold((), |acc, _| acc);
+    }
+
     /// Creates an iterator which uses a closure to determine if an element
     /// should be yielded.
     ///
